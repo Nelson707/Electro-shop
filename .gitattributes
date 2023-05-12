@@ -8,3 +8,4 @@
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
 *admin filter=lfs diff=lfs merge=lfs -text
+*electro filter=lfs diff=lfs merge=lfs -text
