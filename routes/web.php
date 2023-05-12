@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index']);
 
 Route::middleware([
     'auth:sanctum',
@@ -29,3 +29,13 @@ Route::middleware([
 });
 
 Route::get('/redirect', [HomeController::class, 'redirect']);
+
+Route::get('/logout', [LogoutController::class, 'logout']);
+
+Route::get('/admin_dashboard', [AdminController::class, 'admin_dashboard']);
+
+Route::get('/add_category', [AdminController::class, 'add_category']);
+
+Route::get('/add_product', [AdminController::class, 'add_product']);
+
+Route::get('/all_products', [AdminController::class, 'all_products']);

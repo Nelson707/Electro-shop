@@ -19,4 +19,9 @@ class HomeController extends Controller
             return view('home.index');
         }
     }
+
+    public function index()
+    {
+        return view('home.index');
+    }
 }
