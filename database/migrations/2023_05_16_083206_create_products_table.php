@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('discount')->nullable();
             $table->string('quantity');
             $table->string('category');
+            $table->string('tag');
             $table->string('image');
             $table->timestamps();
         });

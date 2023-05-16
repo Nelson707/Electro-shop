@@ -8,7 +8,7 @@
 
     <title>Electro - HTML Ecommerce Template</title>
 
-   @include('home.css')
+    @include('home.css')
 
 </head>
 <body>
@@ -21,14 +21,14 @@
                 @if (Route::has('login'))
                     @auth
                         @if(Auth::user()->role == '1')
-                        <li><a href="{{url('/redirect')}}"></i> Dashboard</a></li>
-                        <li><a href="{{url('/logout')}}"></i> Logout</a></li>
+                            <li><a href="{{url('/redirect')}}"></i> Dashboard</a></li>
+                            <li><a href="{{url('/logout')}}"></i> Logout</a></li>
                         @else
                             <li><a href="{{url('/logout')}}"></i> Logout</a></li>
                         @endif
-                @else
-                    <li><a href="{{ route('login') }}"><i class="fa fa-user-o"></i> Login</a></li>
-                    <li><a href="{{ route('register') }}"><i class="fa fa-user-o"></i> Sign Up</a></li>
+                    @else
+                        <li><a href="{{ route('login') }}"><i class="fa fa-user-o"></i> Login</a></li>
+                        <li><a href="{{ route('register') }}"><i class="fa fa-user-o"></i> Sign Up</a></li>
                     @endauth
                 @endif
             </ul>
@@ -46,7 +46,7 @@
                 <div class="col-md-3">
                     <div class="header-logo">
                         <a href="{{url('/')}}" class="logo">
-                            <img src="./img/logo.png" alt="">
+                            <img src="/img/logo.png" alt="">
                         </a>
                     </div>
                 </div>
@@ -146,25 +146,72 @@
 @include('home.navigation')
 <!-- /NAVIGATION -->
 
-<!-- SECTION -->
+<div class="section">
+    <div class="container">
+        <div class="row" style="display:flex; margin: auto">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                    <button type="button" class="close" style="float: right;" data-dismiss="alert" aria-hidden="true">X</button>
+                </div>
+            @endif
 
-<!-- /SECTION -->
+            <div class="col">
+                <img src="/Product Images/{{$product->image}}" alt="" width="500" height="400">
+            </div>
 
-<!-- SECTION -->
-@include('home.newProducts')
-<!-- /SECTION -->
+            <div class="col" style="margin-left: 10px; width: 30%; padding: 10px;">
+                <h3>
+                    {{ $product->title }}
+                </h3>
 
-<!-- HOT DEAL SECTION -->
+                @if($product->discount !=null)
 
-<!-- /HOT DEAL SECTION -->
+                    <h4 style="color: red">
+                        Ksh.{{ $product->discount }}
+                    </h4>
 
-<!-- SECTION -->
-@include('home.topSelling')
-<!-- /SECTION -->
+                    <h4 style="text-decoration: line-through">
+                        Ksh.{{ $product->price }}
+                    </h4>
 
-<!-- SECTION -->
+                @else
 
-<!-- /SECTION -->
+                    <h4 style="color: dodgerblue">
+                        Ksh.{{ $product->price }}
+                    </h4>
+
+                @endif
+
+                <h5>
+                    Category: {{ $product->category }}
+                </h5>
+
+                <h5 style="margin-right: 10px">
+                    Details: {{ $product->description }}
+                </h5>
+
+                <h5>
+                    In Stock: {{ $product->quantity }}
+                </h5>
+
+                <form action="{{ url('add_cart',$product->id) }}" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="number" name="quantity" value="1" min="1" style="width: 100px; padding: 10px">
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="submit" value="Add to Cart" style="padding: 10px" class="btn btn-warning">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- NEWSLETTER -->
 @include('home.newsletter')

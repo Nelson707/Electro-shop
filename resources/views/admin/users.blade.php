@@ -46,43 +46,38 @@
                     </div>
                 @endif
 
-                <h1 class="mx-auto h3" style="width: 200px; font-size: 20px">All Products</h1>
+
+                <h1 class="mx-auto" style="width: 200px; font-size: 30px">All Users ()</h1>
 
                 <table class="table">
                     <tr class="bg-info">
-                        <th class="text-dark">#</th>
-                        <th class="text-dark">Title</th>
-                        <th class="text-dark">Description</th>
-                        <th class="text-dark">Image</th>
-                        <th class="text-dark">Category</th>
-                        <th class="text-dark">Price</th>
-                        <th class="text-dark">Discount Price</th>
-                        <th class="text-dark">Quantity</th>
-                        <th class="text-dark">Tag</th>
+                        <th class="text-dark">Name</th>
+                        <th class="text-dark">Email</th>
+                        <th class="text-dark">Phone</th>
+                        <th class="text-dark">Created at</th>
+                        <th class="text-dark">Role</th>
                         <th class="text-dark">Actions</th>
                     </tr>
 
-                    @foreach($product as $product)
+                    @foreach($user as $user)
                         <tr>
-                            <td>{{ $product->id }}</td>
-                            <td>{{ $product->title }}</td>
-                            <td>{{ $product->description }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->phone }}</td>
+                            <td>{{ $user->created_at }}</td>
+                            @if($user->role=='1')
+                                <td>Admin</td>
+                            @else
+                                <td>User</td>
+                            @endif
                             <td>
-                                <img src="/Product Images/{{ $product->image }}">
-                            </td>
-                            <td>{{ $product->category }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>{{ $product->discount }}</td>
-                            <td>{{ $product->quantity }}</td>
-                            <td>{{ $product->tag }}</td>
-                            <td>
-                                <a class="btn btn-success" href="{{ url('edit_product', $product->id) }}">Edit</a>
-                                <a onclick="return confirm('Are you sure you want to delete this Product?')"  class="btn btn-danger" href="{{ url('delete_product', $product->id) }}">Delete</a>
+                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a href="{{ url('delete_user',$user->id) }}" class="btn btn-danger" onclick="confirm('Are you sure you want to delete the selected user?')">Delete</a>
                             </td>
                         </tr>
                     @endforeach
-
                 </table>
+
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->

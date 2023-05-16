@@ -50,39 +50,39 @@
 
                     <h1 class="h3">Add Product</h1>
 
-                    <form action="{{ url('/create_product') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ url('/update_product', $product->id) }}" method="post" enctype="multipart/form-data">
 
                         @csrf
 
                         <div class="div_design">
                             <label>Product Title :</label>
-                            <input class="form-control" type="text" name="title" placeholder="Product Title" required>
+                            <input class="form-control" type="text" name="title" placeholder="Product Title" value="{{$product->title}}">
                         </div>
 
                         <div class="div_design">
                             <label>Product Description :</label>
-                            <textarea class="form-control" name="description" cols="20" rows="5"></textarea>
+                            <textarea class="form-control" name="description" cols="20" rows="5">{{$product->description}}</textarea>
                         </div>
 
                         <div class="div_design">
                             <label>Product Price :</label>
-                            <input class="form-control" type="number" name="product_price" placeholder="Product price" required>
+                            <input class="form-control" type="number" name="product_price" placeholder="Product price" value="{{$product->price}}">
                         </div>
 
                         <div class="div_design">
                             <label>Discount Price :</label>
-                            <input class="form-control" type="number" name="dis_price" placeholder="Discount Price">
+                            <input class="form-control" type="number" name="dis_price" placeholder="Discount Price" value="{{$product->discount}}">
                         </div>
 
                         <div class="div_design">
                             <label>Product Quantity :</label>
-                            <input class="form-control" type="number" name="product_quantity" placeholder="Product quantity" required>
+                            <input class="form-control" type="number" name="product_quantity" placeholder="Product quantity" value="{{$product->quantity}}">
                         </div>
 
                         <div class="div_design">
                             <label>Product Category :</label>
-                            <select class="form-control" name="product_category" required>
-                                <option value="" selected="">Add category here</option>
+                            <select class="form-control" name="product_category">
+                                <option value="{{ $product->category }}" selected="">{{ $product->category }}</option>
 
                                 @foreach($category as $category)
                                     <option value="{{ $category->getAttributeValue('category_name') }}">{{ $category->getAttributeValue('category_name') }}</option>
@@ -93,16 +93,22 @@
 
                         <div class="div_design">
                             <label>Product Tag :</label>
-                            <input class="form-control" type="text" name="product_tag" placeholder="Product tag" required>
+                            <input class="form-control" type="text" name="product_tag" placeholder="Product tag" value="{{$product->tag}}">
+                        </div>
+
+                        <div class="div-design">
+                            <label>Current Product Image :</label>
+                            <img  height="100" width="100"
+                                 src="/Product Images/{{ $product->image }}" alt="">
                         </div>
 
                         <div class="div_design">
-                            <label>Product Image Here :</label>
-                            <input type="file" name="image" required style="margin-top: 5px">
+                            <label>New Product Image Here :</label>
+                            <input type="file" name="image"  style="margin-top: 5px">
                         </div>
 
                         <div class="div_design">
-                            <input type="submit" name="" value="Add Product" class="btn btn-primary text-black">
+                            <input type="submit" name="" value="Update Product" class="btn btn-primary text-black">
                         </div>
 
 
