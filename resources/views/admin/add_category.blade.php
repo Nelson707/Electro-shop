@@ -39,6 +39,48 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
+                @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                        <button type="button" class="close" style="float: right;" data-dismiss="alert" aria-hidden="true">X</button>
+                    </div>
+                @endif
+
+                <div class="div_center">
+                    <h2 class="h3">Add Category</h2>
+
+                    <form action="{{ url('/new_category') }}" method="post">
+
+                        @csrf
+
+                        <input class="form-control" type="text" name="category" placeholder="Enter Category">
+
+                        <input class="btn btn-primary" type="submit" name="submit" value="Add Category" style="margin-top: 5px; color: #000">
+                    </form>
+                </div>
+
+                <h1 class="mx-auto" style="width: 200px; font-size: 30px">All Categories</h1>
+
+                <table class="table">
+                    <tr class="bg-info">
+                        <td class="text-dark">#</td>
+                        <td class="text-dark">Category Name</td>
+                        <td class="text-dark">Action</td>
+                    </tr>
+
+                    @foreach($category as $category)
+
+                        <tr>
+                            <td>{{$category->id}}</td>
+                            <td>{{$category->category_name}}</td>
+                            <td>
+                                <a onclick="return confirm('Are you sure you want to delete the category?')" href="{{ url('delete_category',$category->id) }}" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+
+                    @endforeach
+
+                </table>
 
             </div>
             <!-- content-wrapper ends -->

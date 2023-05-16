@@ -39,6 +39,71 @@
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
+                @if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                        <button type="button" class="close" style="float: right;" data-dismiss="alert" aria-hidden="true">X</button>
+                    </div>
+                @endif
+
+                <div class="div_center">
+
+                    <h1 class="h3">Add Product</h1>
+
+                    <form action="{{ url('/create_product') }}" method="post" enctype="multipart/form-data">
+
+                        @csrf
+
+                        <div class="div_design">
+                            <label>Product Title :</label>
+                            <input class="form-control" type="text" name="title" placeholder="Product Title" required>
+                        </div>
+
+                        <div class="div_design">
+                            <label>Product Description :</label>
+                            <textarea class="form-control" name="description" cols="20" rows="5"></textarea>
+                        </div>
+
+                        <div class="div_design">
+                            <label>Product Price :</label>
+                            <input class="form-control" type="number" name="product_price" placeholder="Product price" required>
+                        </div>
+
+                        <div class="div_design">
+                            <label>Discount Price :</label>
+                            <input class="form-control" type="number" name="dis_price" placeholder="Discount Price">
+                        </div>
+
+                        <div class="div_design">
+                            <label>Product Quantity :</label>
+                            <input class="form-control" type="number" name="product_quantity" placeholder="Product quantity" required>
+                        </div>
+
+                        <div class="div_design">
+                            <label>Product Category :</label>
+                            <select class="form-control" name="product_category" required>
+                                <option value="" selected="">Add category here</option>
+
+                                @foreach($category as $category)
+                                    <option value="{{ $category->getAttributeValue('category_name') }}">{{ $category->getAttributeValue('category_name') }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+                        <div class="div_design">
+                            <label>Product Image Here :</label>
+                            <input type="file" name="image" required style="margin-top: 5px">
+                        </div>
+
+                        <div class="div_design">
+                            <input type="submit" name="" value="Add Product" class="btn btn-primary text-black">
+                        </div>
+
+
+                    </form>
+
+                </div>
 
             </div>
             <!-- content-wrapper ends -->
