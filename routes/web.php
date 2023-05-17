@@ -54,6 +54,10 @@ Route::get('/all_users', [AdminController::class, 'all_users']);
 
 Route::get('/delete_user/{id}', [AdminController::class, 'delete_user']);
 
+Route::get('/orders', [AdminController::class, 'orders']);
+
+Route::get('/delivered/{id}', [AdminController::class, 'delivered']);
+
 
 
 Route::get('/product_details/{id}', [HomeController::class, 'product_details']);
