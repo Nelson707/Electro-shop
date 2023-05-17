@@ -48,14 +48,13 @@
 
 <div class="section">
     <div class="container">
+        @if(session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+                <button type="button" class="close" style="float: right;" data-dismiss="alert" aria-hidden="true">X</button>
+            </div>
+        @endif
         <div class="row" style="display:flex; margin: auto">
-            @if(session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session()->get('message') }}
-                    <button type="button" class="close" style="float: right;" data-dismiss="alert" aria-hidden="true">X</button>
-                </div>
-            @endif
-
             <div class="col">
                 <img src="/Product Images/{{$product->image}}" alt="" width="500" height="400">
             </div>
