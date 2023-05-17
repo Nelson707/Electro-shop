@@ -90,7 +90,14 @@
             </table>
 
             <div>
+                <h3>Cart Summary</h3>
                 <h4>Total Price: Ksh. {{ $totalPrice }}</h4>
+            </div>
+
+            <div>
+                <h4>Proceed to order</h4>
+                <a href="{{url('cash_order')}}" class="btn btn-success">Cash On Delivery</a>
+                <a href="{{url('stripe', $totalPrice)}}" class="btn btn-warning">Pay With Card</a>
             </div>
         </div>
     </div>

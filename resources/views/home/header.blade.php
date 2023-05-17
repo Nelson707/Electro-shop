@@ -73,7 +73,7 @@
                             </div>
                             <div class="cart-btns">
                                 <a href="{{url('show_cart')}}">View Cart</a>
-                                <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                <a href="{{url('stripe', $totalPrice)}}">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
