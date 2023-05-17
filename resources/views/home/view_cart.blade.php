@@ -10,6 +10,13 @@
 
     @include('home.css')
 
+    <style>
+        .cart_img{
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+
 </head>
 <body>
 <!-- HEADER -->
@@ -45,10 +52,10 @@
 <!-- NAVIGATION -->
 @include('home.navigation')
 <!-- /NAVIGATION -->
-
 <div class="section">
     <div class="container">
-        <div class="row" style="display:flex; margin: auto">
+        <div class="row">
+
             @if(session()->has('message'))
                 <div class="alert alert-success">
                     {{ session()->get('message') }}
@@ -56,58 +63,34 @@
                 </div>
             @endif
 
-            <div class="col">
-                <img src="/Product Images/{{$product->image}}" alt="" width="500" height="400">
-            </div>
+                <div>
+                    <h4>Cart({{ $total_cart }})</h4>
+                </div>
 
-            <div class="col" style="margin-left: 10px; width: 30%; padding: 10px;">
-                <h3>
-                    {{ $product->title }}
-                </h3>
+            <table class="table">
+                <tr>
+                    <th>Product Title</th>
+                    <th>Product Quantity</th>
+                    <th>Product Price</th>
+                    <th>Product Image</th>
+                    <th>Product Actions</th>
+                </tr>
 
-                @if($product->discount !=null)
+                <?php $totalPrice = 0 ?>
+                @foreach($cart as $cart)
+                <tr>
+                    <td>{{ $cart->product_title }}</td>
+                    <td>{{ $cart->quantity }}</td>
+                    <td>Ksh. {{ $cart->price }}</td>
+                    <td><img class="cart_img" src="/Product Images/{{ $cart->image }}"></td>
+                    <td><a class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product ?')" href="{{url('remove_cart', $cart->id)}}">Remove Product</a></td>
+                </tr>
+                <?php $totalPrice = $totalPrice + $cart->price?>
+                @endforeach
+            </table>
 
-                    <h4 style="color: red">
-                        Ksh.{{ $product->discount }}
-                    </h4>
-
-                    <h4 style="text-decoration: line-through">
-                        Ksh.{{ $product->price }}
-                    </h4>
-
-                @else
-
-                    <h4 style="color: dodgerblue">
-                        Ksh.{{ $product->price }}
-                    </h4>
-
-                @endif
-
-                <h5>
-                    Category: {{ $product->category }}
-                </h5>
-
-                <h5 style="margin-right: 10px">
-                    Details: {{ $product->description }}
-                </h5>
-
-                <h5>
-                    In Stock: {{ $product->quantity }}
-                </h5>
-
-                <form action="{{ url('add_cart',$product->id) }}" method="post">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-4">
-                            <input type="number" name="quantity" value="1" min="1" style="width: 100px; padding: 10px">
-                        </div>
-
-                        <div class="col-md-4">
-                            <input type="submit" value="Add to Cart" style="padding: 10px" class="btn btn-warning">
-                        </div>
-                    </div>
-
-                </form>
+            <div>
+                <h4>Total Price: Ksh. {{ $totalPrice }}</h4>
             </div>
         </div>
     </div>
