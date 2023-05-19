@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -145,6 +146,29 @@ class AdminController extends Controller
         $order->payment_status = 'Paid';
         $order->save();
         return redirect()->back();
+    }
+
+    public function print_pdf($id)
+    {
+        $order = order::find($id);
+        $pdf = PDF::loadView('admin.pdf', compact('order'));
+        return $pdf->download('order_details.pdf');
+    }
+
+    public function searchProduct(Request $request)
+    {
+        $searchText = $request->search;
+        $product = product::where('title','LIKE',"%$searchText%")->orWhere('description','LIKE',"%$searchText%")->orWhere('category','LIKE',"%$searchText%")->orWhere('tag','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
+
+        return view('admin.all_products', compact('product'));
+    }
+
+    public function searchOrders(Request $request)
+    {
+        $searchText = $request->search;
+        $order = order::where('name','LIKE',"%$searchText%")->orWhere('email','LIKE',"%$searchText%")->orWhere('phone','LIKE',"%$searchText%")->orWhere('product_title','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
+
+        return view('admin.orders', compact('order'));
     }
 
 }

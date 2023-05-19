@@ -28,7 +28,7 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/redirect', [HomeController::class, 'redirect']);
+Route::get('/redirect', [HomeController::class, 'redirect'])->middleware('auth','verified');
 
 Route::get('/logout', [LogoutController::class, 'logout']);
 
@@ -58,6 +58,12 @@ Route::get('/orders', [AdminController::class, 'orders']);
 
 Route::get('/delivered/{id}', [AdminController::class, 'delivered']);
 
+Route::get('/print_pdf/{id}', [AdminController::class, 'print_pdf']);
+
+Route::get('/search', [AdminController::class, 'searchProduct']);
+
+Route::get('/search_orders', [AdminController::class, 'searchOrders']);
+
 
 
 Route::get('/product_details/{id}', [HomeController::class, 'product_details']);
@@ -73,3 +79,30 @@ Route::get('/cash_order', [HomeController::class, 'cash_order']);
 Route::get('/stripe/{totalPrice}', [HomeController::class, 'stripe']);
 
 Route::post('stripe/{totalPrice}', [HomeController::class, 'stripePost'])->name('stripe.post');
+
+Route::get('/search_home', [HomeController::class, 'search_home']);
+
+Route::get('/show_order', [HomeController::class, 'show_order']);
+
+Route::get('/cancel_order/{id}', [HomeController::class, 'cancel_order']);
+
+Route::get('/all_laptops', [HomeController::class, 'all_laptops']);
+
+Route::get('/search_laptops', [HomeController::class, 'search_laptops']);
+
+Route::get('/all_desktops', [HomeController::class, 'all_desktops']);
+
+Route::get('/search_desktops', [HomeController::class, 'search_desktops']);
+
+Route::get('/all_smartphones', [HomeController::class, 'all_smartphones']);
+
+Route::get('/search_smartphones', [HomeController::class, 'search_smartphones']);
+
+Route::get('/all_cameras', [HomeController::class, 'all_cameras']);
+
+Route::get('/search_cameras', [HomeController::class, 'search_cameras']);
+
+Route::get('/all_accessories', [HomeController::class, 'all_accessories']);
+
+Route::get('/search_accessories', [HomeController::class, 'search_accessories']);
+

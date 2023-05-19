@@ -14,7 +14,10 @@
                   <i class="icon-search"></i>
                 </span>
                     </div>
-                    <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+                    <form action="{{url('search')}}" method="get">
+                        @csrf
+                        <input type="text" name="search" class="form-control" id="navbar-search-input" placeholder="Search Products" aria-label="search" aria-describedby="search">
+                    </form>
                 </div>
             </li>
         </ul>

@@ -28,7 +28,9 @@ class HomeController extends Controller
         {
             $product = product::all();
             $category = category::all();
-            return view('home.index', compact('product','category'));
+            $cart = cart::all();
+            $total_cart = cart::all()->count();
+            return view('home.index', compact('product','category','cart','total_cart'));
         }
     }
 
@@ -55,34 +57,58 @@ class HomeController extends Controller
         if (Auth::id())
         {
             $user = Auth::user();
+            $user_id = $user->id;
             $product = product::find($id);
 
-            $cart = new cart;
+            $product_exist_id = cart::where('product_id','=',$id)->where('user_id','=',$user_id)->get('id')->first();
 
-            $cart->name = $user->name;
-            $cart->email = $user->email;
-            $cart->phone = $user->phone;
-            $cart->address = $user->address;
-            $cart->user_id = $user->id;
-
-            $cart->product_title = $product->title;
-            if ($product->discount != null)
+            if ($product_exist_id)
             {
-                $cart->price = $product->discount * $request->quantity;
+                $cart = cart::find($product_exist_id)->first();
+                $quantity = $cart->quantity;
+                $cart->quantity = $quantity + $request->quantity;
+
+                if ($product->discount != null)
+                {
+                    $cart->price = $product->discount * $cart->quantity;
+                }
+                else
+                {
+                    $cart->price = $product->price * $cart->quantity;
+                }
+
+                $cart->save();
+                return redirect()->back()->with('message', 'Product added to cart successfully');
             }
             else
             {
-                $cart->price = $product->price * $request->quantity;
+                $cart = new cart;
+
+                $cart->name = $user->name;
+                $cart->email = $user->email;
+                $cart->phone = $user->phone;
+                $cart->address = $user->address;
+                $cart->user_id = $user->id;
+
+                $cart->product_title = $product->title;
+                if ($product->discount != null)
+                {
+                    $cart->price = $product->discount * $request->quantity;
+                }
+                else
+                {
+                    $cart->price = $product->price * $request->quantity;
+                }
+
+                $cart->quantity = $request->quantity;
+                $cart->image = $product->image;
+
+                $cart->product_id = $product->id;
+
+                $cart->save();
+
+                return redirect()->back()->with('message', 'Product added to cart successfully');
             }
-
-            $cart->quantity = $request->quantity;
-            $cart->image = $product->image;
-
-            $cart->product_id = $product->id;
-
-            $cart->save();
-
-            return redirect()->back()->with('message', 'Product added to cart successfully');
 
         }
         else
@@ -202,4 +228,152 @@ class HomeController extends Controller
         Session::flash('success', 'Payment successful!');
         return back();
     }
+
+    public function search_home(Request $request)
+    {
+        $products = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        $searchText = $request->search;
+        $product = product::where('title','LIKE',"%$searchText%")->orWhere('description','LIKE',"%$searchText%")->orWhere('category','LIKE',"%$searchText%")->orWhere('tag','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
+
+        return view('home.index', compact('products','category','cart','total_cart','product'));
+    }
+
+    public function show_order()
+    {
+        if (Auth::id())
+        {
+            $cart = cart::all();
+            $total_cart = cart::all()->count();
+            $user = Auth::user();
+            $userId = $user->id;
+            $order = order::where('user_id','=',$userId)->get();
+            return view('home.order', compact('order','cart','total_cart'));
+        }
+        else
+        {
+            return redirect('login');
+        }
+    }
+
+    public function cancel_order($id)
+    {
+        $order = order::find($id);
+//        $order->payment_status = 'Cancelled';
+//        $order->delivery_status = 'Cancelled';
+
+        $order->delete();
+
+        return redirect()->back()->with('message','Order cancelled successfully');
+    }
+
+    public function all_laptops()
+    {
+        $product = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        return view('home.laptops', compact('product','category','cart','total_cart'));
+    }
+
+    public function search_laptops(Request $request)
+    {
+        $products = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        $searchText = $request->search;
+        $product = product::where('title','LIKE',"%$searchText%")->orWhere('description','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
+
+        return view('home.laptops', compact('products','category','cart','total_cart','product'));
+    }
+
+    public function all_desktops()
+    {
+        $product = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        return view('home.desktops', compact('product','category','cart','total_cart'));
+    }
+
+    public function search_desktops(Request $request)
+    {
+        $products = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        $searchText = $request->search;
+        $product = product::where('title','LIKE',"%$searchText%")->orWhere('description','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
+
+        return view('home.desktops', compact('products','category','cart','total_cart','product'));
+    }
+
+    public function all_smartphones()
+    {
+        $product = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        return view('home.smartphones', compact('product','category','cart','total_cart'));
+    }
+
+    public function search_smartphones(Request $request)
+    {
+        $products = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        $searchText = $request->search;
+        $product = product::where('title','LIKE',"%$searchText%")->orWhere('description','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
+
+        return view('home.smartphones', compact('products','category','cart','total_cart','product'));
+    }
+
+    public function all_cameras()
+    {
+        $product = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        return view('home.cameras', compact('product','category','cart','total_cart'));
+    }
+
+    public function search_cameras(Request $request)
+    {
+        $products = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        $searchText = $request->search;
+        $product = product::where('title','LIKE',"%$searchText%")->orWhere('description','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
+
+        return view('home.cameras', compact('products','category','cart','total_cart','product'));
+    }
+
+    public function all_accessories()
+    {
+        $product = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        return view('home.accessories', compact('product','category','cart','total_cart'));
+    }
+
+    public function search_accessories(Request $request)
+    {
+        $products = product::all();
+        $category = category::all();
+        $cart = cart::all();
+        $total_cart = cart::all()->count();
+        $searchText = $request->search;
+        $product = product::where('title','LIKE',"%$searchText%")->orWhere('description','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
+
+        return view('home.accessories', compact('products','category','cart','total_cart','product'));
+    }
+
+
+
 }

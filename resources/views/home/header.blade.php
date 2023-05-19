@@ -16,11 +16,12 @@
             <!-- SEARCH BAR -->
             <div class="col-md-6">
                 <div class="header-search">
-                    <form>
+                    <form action="{{url('search_home')}}" method="get">
+                        @csrf
                         <select class="input-select">
                             <option value="0">All Categories</option>
                         </select>
-                        <input class="input" placeholder="Search here">
+                        <input class="input" name="search" placeholder="Search here">
                         <button class="search-btn">Search</button>
                     </form>
                 </div>
@@ -30,16 +31,6 @@
             <!-- ACCOUNT -->
             <div class="col-md-3 clearfix">
                 <div class="header-ctn">
-                    <!-- Wishlist -->
-                    <div>
-                        <a href="#">
-                            <i class="fa fa-heart-o"></i>
-                            <span>Your Wishlist</span>
-                            <div class="qty">2</div>
-                        </a>
-                    </div>
-                    <!-- /Wishlist -->
-
                     <!-- Cart -->
 
                     <div class="dropdown">
@@ -78,8 +69,18 @@
                         </div>
                     </div>
 
-
                     <!-- /Cart -->
+
+                    <!-- Order -->
+                    <div>
+                        <a href="#">
+                            <i class="fa fa-heart-o"></i>
+{{--                            <span>Your Order</span>--}}
+                            <a href="{{url('show_order')}}">Your Order</a>
+{{--                            <div class="qty">2</div>--}}
+                        </a>
+                    </div>
+                    <!-- /Order -->
 
                     <!-- Menu Toogle -->
                     <div class="menu-toggle">

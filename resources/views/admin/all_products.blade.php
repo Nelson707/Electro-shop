@@ -62,7 +62,7 @@
                         <th class="text-dark">Actions</th>
                     </tr>
 
-                    @foreach($product as $product)
+                    @forelse($product as $product)
                         <tr>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->title }}</td>
@@ -80,7 +80,15 @@
                                 <a onclick="return confirm('Are you sure you want to delete this Product?')"  class="btn btn-danger" href="{{ url('delete_product', $product->id) }}">Delete</a>
                             </td>
                         </tr>
-                    @endforeach
+
+                        @empty
+                            <tr>
+                                <td colspan="16">
+                                    No Records Found.
+                                </td>
+                            </tr>
+
+                    @endforelse
 
                 </table>
             </div>

@@ -8,14 +8,6 @@
             <div class="col-md-12">
                 <div class="section-title">
                     <h3 class="title">New Products</h3>
-                    <div class="section-nav">
-                        @foreach($category as $category)
-                        <ul class="section-tab-nav tab-nav">
-                            <li class="active"><a data-toggle="tab" href="#"></a></li>
-                            <li><a data-toggle="tab" href="#">{{ $category->category_name }}</a></li>
-                        </ul>
-                        @endforeach
-                    </div>
                 </div>
             </div>
             <!-- /section title -->
