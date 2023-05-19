@@ -48,38 +48,39 @@
 
                 <h1 class="mx-auto h3" style="width: 200px; font-size: 20px">All Products</h1>
 
-                <table class="table">
-                    <tr class="bg-info">
-                        <th class="text-dark">#</th>
-                        <th class="text-dark">Title</th>
-                        <th class="text-dark">Description</th>
-                        <th class="text-dark">Image</th>
-                        <th class="text-dark">Category</th>
-                        <th class="text-dark">Price</th>
-                        <th class="text-dark">Discount Price</th>
-                        <th class="text-dark">Quantity</th>
-                        <th class="text-dark">Tag</th>
-                        <th class="text-dark">Actions</th>
-                    </tr>
-
-                    @forelse($product as $product)
-                        <tr>
-                            <td>{{ $product->id }}</td>
-                            <td>{{ $product->title }}</td>
-                            <td>{{ $product->description }}</td>
-                            <td>
-                                <img src="/Product Images/{{ $product->image }}">
-                            </td>
-                            <td>{{ $product->category }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>{{ $product->discount }}</td>
-                            <td>{{ $product->quantity }}</td>
-                            <td>{{ $product->tag }}</td>
-                            <td>
-                                <a class="btn btn-success" href="{{ url('edit_product', $product->id) }}">Edit</a>
-                                <a onclick="return confirm('Are you sure you want to delete this Product?')"  class="btn btn-danger" href="{{ url('delete_product', $product->id) }}">Delete</a>
-                            </td>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr class="bg-info">
+                            <th class="text-dark">#</th>
+                            <th class="text-dark">Title</th>
+                            <th class="text-dark">Description</th>
+                            <th class="text-dark">Image</th>
+                            <th class="text-dark">Category</th>
+                            <th class="text-dark">Price</th>
+                            <th class="text-dark">Discount Price</th>
+                            <th class="text-dark">Quantity</th>
+                            <th class="text-dark">Tag</th>
+                            <th class="text-dark">Actions</th>
                         </tr>
+
+                        @forelse($product as $product)
+                            <tr>
+                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->title }}</td>
+                                <td>{{ $product->description }}</td>
+                                <td>
+                                    <img src="/Product Images/{{ $product->image }}">
+                                </td>
+                                <td>{{ $product->category }}</td>
+                                <td>{{ $product->price }}</td>
+                                <td>{{ $product->discount }}</td>
+                                <td>{{ $product->quantity }}</td>
+                                <td>{{ $product->tag }}</td>
+                                <td>
+                                    <a class="btn btn-success" href="{{ url('edit_product', $product->id) }}">Edit</a>
+                                    <a onclick="return confirm('Are you sure you want to delete this Product?')"  class="btn btn-danger" href="{{ url('delete_product', $product->id) }}">Delete</a>
+                                </td>
+                            </tr>
 
                         @empty
                             <tr>
@@ -88,9 +89,10 @@
                                 </td>
                             </tr>
 
-                    @endforelse
+                        @endforelse
 
-                </table>
+                    </table>
+                </div>
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
