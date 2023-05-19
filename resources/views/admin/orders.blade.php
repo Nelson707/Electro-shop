@@ -118,6 +118,10 @@
                             <td>
                                 <a href="{{url('print_pdf', $order->id)}}" class="btn btn-info">Print PDF</a>
                             </td>
+
+                            <td>
+                                <a href="{{url('send_email', $order->id)}}" class="btn btn-success">Send Email</a>
+                            </td>
                         </tr>
 
                         @empty

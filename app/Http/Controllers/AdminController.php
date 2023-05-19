@@ -6,9 +6,11 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Notifications\SendEmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Notification;
 
 class AdminController extends Controller
 {
@@ -169,6 +171,29 @@ class AdminController extends Controller
         $order = order::where('name','LIKE',"%$searchText%")->orWhere('email','LIKE',"%$searchText%")->orWhere('phone','LIKE',"%$searchText%")->orWhere('product_title','LIKE',"%$searchText%")->orWhere('price','LIKE',"%$searchText%")->get();
 
         return view('admin.orders', compact('order'));
+    }
+
+    public function send_email($id)
+    {
+        $order = order::find($id);
+        return view('admin.email_info', compact('order'));
+    }
+
+    public function send_user_email(Request $request, $id)
+    {
+        $order = order::find($id);
+        $details = [
+            'greeting' => $request->greeting,
+            'firstLine' => $request->firstLine,
+            'body' => $request->body,
+            'button' => $request->button,
+            'url' => $request->url,
+            'lastLine' => $request->lastLine,
+        ];
+
+        Notification::send($order, new SendEmailNotification($details));
+
+        return redirect()->back()->with('message','Email sent successfully');
     }
 
 }

@@ -64,6 +64,11 @@ Route::get('/search', [AdminController::class, 'searchProduct']);
 
 Route::get('/search_orders', [AdminController::class, 'searchOrders']);
 
+Route::get('/send_email/{id}', [AdminController::class, 'send_email']);
+
+Route::post('/send_user_email/{id}', [AdminController::class, 'send_user_email']);
+
+
 
 
 Route::get('/product_details/{id}', [HomeController::class, 'product_details']);
